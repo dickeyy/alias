@@ -9,7 +9,6 @@
 .u-section-1 .u-tabs-1 {
   min-height: 615px;
   width: 964px;
-  height: auto;
   margin: 41px auto;
 }
 
@@ -29,7 +28,6 @@
   width: 894px;
   min-height: 691px;
   background-image: none;
-  height: auto;
   margin: 33px auto 0;
 }
 
@@ -65,9 +63,6 @@
 @media (max-width: 1199px) {
   .u-section-1 .u-tabs-1 {
     width: 940px;
-  }
-
-  .u-section-1 .u-group-1 {
     height: auto;
   }
 }
