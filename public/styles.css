@@ -1,0 +1,612 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+body {
+    background-color: #222629;
+    font-family: 'Roboto';
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    min-height: 90vh;
+    min-width: 90%;
+    color: white;
+}
+
+.h1 {
+    font-size: 65px;
+}
+
+.form-input {
+    margin-top: 20px;
+    background-color: #222629;
+    height: 70px;
+    border: 3px solid #86c232;
+    border-radius: 13px;
+    text-align: center;
+    color: white;
+    font-size: 25px;
+}
+
+.form-submit {
+    margin-left: 10px;
+    margin-top: 20px;
+    background-color: #222629;
+    height: 80px;
+    width: 200px;
+    border: 3px solid #86c232;
+    border-radius: 13px;
+    text-align: center;
+    color: white;
+    font-size: 30px;
+}
+
+.form-input2 {
+    margin-top: 20px;
+    background-color: black;
+    height: 70px;
+    width: 200px;
+    border: 3px solid #86c232;
+    border-radius: 13px;
+    text-align: center;
+    color: white;
+    font-size: 25px;
+}
+
+.form-submit2 {
+    margin-left: 10px;
+    margin-top: 20px;
+    background-color: black;
+    height: 80px;
+    width: 150px;
+    border: 3px solid #86c232;
+    border-radius: 13px;
+    text-align: center;
+    color: white;
+    font-size: 30px;
+}
+
+.form-submit2:hover {
+    background-color: rgba(53,76,20,0.4);
+}
+
+.form-submit:hover {
+    background-color: rgba(53,76,20,0.4);
+}
+
+.h3 {
+    font-family: "Roboto";
+    
+}
+
+.name-list {
+    display: inline;
+    background-color: black;
+}
+
+p {
+    display:inline-block;
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-top: 50px;
+    font-size: 50px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+ul{
+    text-align: center;
+    max-width: 70vw;
+}
+
+.playing-h1 {
+    margin-bottom: 30px;
+    cursor:pointer
+}
+
+.h3-2 {
+    font-family: "Roboto";
+    color:#86c232;
+    font-size: 30px;
+    margin-top: -10px;
+}
+
+.h2 {
+    font-family: 'Roboto';
+    font-size: 25px;
+}
+
+.h2-link {
+    font-family: 'Roboto';
+    font-size: 35px;
+    color:rgb(156, 154, 154);
+    text-decoration: underline;
+    cursor: pointer;
+    background-color: #222629;
+    border: none;
+    text-align: center;
+    width: auto;
+    max-width: 90%;
+    height: 38px;
+    resize: none;
+    overflow: hidden;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 140px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -75px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+
+.qrcode {
+    border-radius: 5px;
+}
+
+.close-btn {
+    border-color: rgb(255,0,0);
+}
+
+.start-btn {
+    border-color: rgb(0,255,0);
+}
+
+.start-btn:hover{
+    background-color: rgba(0,255,0,0.4);
+}
+
+.close-btn:hover {
+    background-color: rgba(255,0,0,0.4);
+}
+
+.h2-2 {
+    font-family: 'Roboto';
+    font-size: 35px; 
+    color:#86c232;
+    margin-top: 20px
+}
+
+.h2-2-code {
+    font-family: 'Roboto';
+    font-size: 50px; 
+    color:#86c232;
+    margin-top: 20px
+}
+
+.username {
+    display: inline;
+}
+
+.username-div {
+    text-align: center;
+}
+
+.pencil {
+    font-size: 25px;
+    display: inline;
+    margin-left: 10px;
+}
+
+.pencil:hover {
+    cursor: pointer;
+    text-shadow: 0px 0px 20px #86c232;
+}
+
+#customBtn {
+    display: inline-block;
+    background: white;
+    color: #444;
+    width: 190px;
+    border-radius: 5px;
+    border: thin solid #888;
+    box-shadow: 1px 1px 1px grey;
+    white-space: nowrap;
+}
+#customBtn:hover {
+    cursor: pointer;
+}
+span.label {
+    font-family: serif;
+    font-weight: normal;
+}
+span.icon {
+    background: url('images/btn_google_signin_light_normal_web.png') transparent 5px 50% no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+    width: 42px;
+    height: 42px;
+}
+span.buttonText {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 5px;
+    padding-right: 42px;
+    font-size: 14px;
+    font-weight: bold;
+    /* Use the Roboto font that is loaded in the <head> */
+    font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+    color: white;
+    font-size: 60px;
+    margin-top: -1px;
+    margin-bottom: -10px;
+    font-family: 'Roboto';
+    text-align: center;
+}
+
+.container {
+    
+    max-width: 90vw;
+    margin: auto;
+    text-align: center;
+}
+
+.checker {
+  max-width: 90vw;
+  margin: auto;
+    width: 293px;
+    height: 355px;
+    padding-top: 10px;
+    padding-left: 10px;
+    background-color: black;
+    margin-bottom: 25px;
+    border-radius: 13px;
+}
+
+.keyboard {
+  max-width: 90vw;
+  text-align: center;
+}
+
+.k-row-1 {
+  text-align: center;
+  max-width: 99vw;
+  min-width: 90vw;
+}
+
+.k-button {
+  text-align: center;
+  background-color: black;
+  color: white;
+  margin-right: 2px;
+  margin-bottom: 5px;
+  width: 40px;
+  min-width: 30px;
+  max-width: 30px;
+  height: 45px;
+  border: 3px solid black;
+  border-radius: 10px;
+  font-size: 20px;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.k-button-enter, .k-button-back {
+  background-color: black;
+  color: white;
+  margin-left: 5px;
+  margin-bottom: 5px;
+  width: 90px;
+  height: 45px;
+  border: 3px solid black;
+  border-radius: 10px;
+  font-size: 20px;
+}
+
+.k-button:hover {
+  background-color:rgba(58, 58, 58, 0.4);
+  border: 3px solid rgba(58,58,58,0.4);
+}
+
+.k-button-back:hover {
+  background-color: rgba(255, 0, 0, 0.4);
+  border: 3px solid rgba(255,0,0,0.4);
+}
+
+.k-button-enter:hover {
+  background-color: rgba(0, 255, 0, 0.4);
+  border: 3px solid rgba(0,255,0,0.4);
+}
+
+.column {
+  width: fit-content;
+    height: 50px;
+    margin-bottom: 8px;
+}
+
+.col-item {
+    width: 50px;
+    border-radius: 13px;
+    height: 50px;
+    margin-bottom: 3px;
+    margin-right: 3px;
+    border: 2px solid #1d1d1d;
+    float: left;
+    text-align: center;
+}
+
+.col-item2 {
+    width: 80px;
+    height: 66px;
+    margin-left: 90px;
+    border: 2px solid #1d1d1d;
+    float: right;
+}
+
+.item-p {
+    text-align: center;
+    margin-top: -1px;
+    font-family: "Roboto";
+    font-size: 40px
+}
+
+.winModal {
+    font-family: "Roboto";
+    display: none;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */ /* Fallback color */
+    color: white;
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content/Box */
+  .win-mod-cont {
+    background-color: black;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 3px solid green;
+    border-radius: 13px;
+    width: 300px /* Could be more or less, depending on screen size */
+  }
+  
+  /* The Close Button */
+  .win-mod-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .win-mod-p {
+      font-size: 50px;
+      font-weight: 700;
+  }
+  
+  .win-mod-close:hover,
+  .win-mod-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .win-mod-btn {
+      background-color: black;
+      border: 3px solid green;
+      border-radius: 13px;
+      color: white;
+      height: 50px ;
+      width: 100px;
+  }
+
+  .win-mod-btn:hover {
+    background-color: green;
+  }
+
+
+  .loseModal {
+    font-family: "Roboto";
+    display: block;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */ /* Fallback color */
+    color: white;
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+
+  .loseModal2 {
+    font-family: "Roboto";
+    display: none;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */ /* Fallback color */
+    color: white;
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+
+  .loseModal-background {
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content/Box */
+  .lose-mod-cont {
+    background-color: black;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    width: 500px;
+    border: 3px solid #86c232;
+    border-radius: 13px;
+  }
+
+  .lose2-mod-cont {
+    background-color: black;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    width: 300px;
+    border: 3px solid orange;
+    border-radius: 13px;
+  }
+  
+  /* The Close Button */
+  .lose-mod-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .lose-mod-p {
+      font-size: 50px;
+      font-weight: 700;
+  }
+  .lose-mod-p2 {
+    font-size: 20px;
+    font-weight: 700;
+}
+  
+  .wlosein-mod-close:hover,
+  .lose-mod-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .lose-mod-btn {
+      background-color: black;
+      border: 3px solid red;
+      border-radius: 13px;
+      color: white;
+      height: 50px ;
+      width: 100px;
+  }
+
+  .lose-mod-btn:hover {
+    background-color: red;
+  }
+
+  .lose2-mod-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .lose2-mod-btn {
+      background-color: black;
+      border: 3px solid orange;
+      border-radius: 13px;
+      color: white;
+      height: 50px ;
+      width: 100px;
+  }
+
+  .lose2-mod-btn:hover {
+    background-color: orange;
+  }
+
+.bottom-p {
+  font-size: 11px;
+  font-family: "Roboto";
+  color: black;
+  font-weight: 500;
+}
+
+.bottom-a {
+  text-decoration: none;
+  color: black;
+  font-weight: 700;
+}
+
+.bottom-a:hover {
+  text-decoration: underline;
+  color: white;
+}
+
+.top-a {
+  text-decoration: none;
+  color: white;
+}
+
+.top-a:hover {
+  text-decoration: underline;
+}
+
+.btn-group {
+    margin-top:100px,
+}
+
+.solo-btn {
+    margin-top: 40px;
+    width: 200px;
+    height: 70px;
+    font-size: 40px;
+    margin-bottom: 40px;
+    background-color: #1d1d1d;
+    color: white;
+    border: 3px solid green;
+    border-radius: 13px;
+}
+
+.solo-btn:hover {
+    background-color: rgba(0,255,0,0.2);
+}
+
+.multiplayer-btn {
+    width: 250px;
+    height: 70px;
+    font-size: 40px;
+    background-color: #222629;
+    color: white;
+    border: 3px solid #86c232;
+    border-radius: 13px;
+}
+
+.multiplayer-btn:hover {
+    background-color: rgba(53,76,20,0.4);
+}
+
+.multiplayer-btn2 {
+    width: 350px;
+    height: 70px;
+    font-size: 40px;
+    background-color: #222629;
+    color: white;
+    border: 3px solid #86c232;
+    border-radius: 13px;
+}
+
+.multiplayer-btn2:hover {
+    background-color: rgba(53,76,20,0.4);
+}
