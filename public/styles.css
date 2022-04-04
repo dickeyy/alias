@@ -80,6 +80,10 @@ body {
 .name-list {
     display: inline;
     background-color: black;
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
 }
 
 p {
@@ -90,6 +94,26 @@ p {
     font-size: 50px;
     cursor: pointer;
     font-weight: 700;
+    border: 3px solid #86c232;
+    padding: 8px 8px 8px 15px;
+    border-radius: 13px;
+}
+
+.dark-h3 {
+  color:#4d4d4d;
+  font-size: 30px;
+  margin-bottom: -40px;
+}
+
+.logo-small {
+  height: 30px;
+  width: 30px;
+  display: inline;
+}
+
+.logo {
+  font-size: 39px;
+  display: inline;
 }
 
 ul{
@@ -99,7 +123,7 @@ ul{
 
 .playing-h1 {
     margin-bottom: 30px;
-    cursor:pointer
+    cursor:pointer;
 }
 
 .h3-2 {
@@ -168,9 +192,6 @@ ul{
     opacity: 1;
   }
 
-.qrcode {
-    border-radius: 5px;
-}
 
 .close-btn {
     border-color: rgb(255,0,0);

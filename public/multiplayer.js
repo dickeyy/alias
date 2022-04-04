@@ -18,6 +18,11 @@ const pageName = fileExtension.split('.')[0]
 // Sign in
 const nameElem = document.getElementById('userName')
 onAuthStateChanged(auth, (user) => {
+    if (pageName == 'playing') {
+        document.getElementById('gSignInWrapper').style.display = 'none'
+        document.getElementById('pencil').style.display = 'none'
+    }
+
     if (user == null) {
         // Automatically sign in as anonymous
         signInAnonymously(auth).then(() => {
@@ -37,23 +42,32 @@ onAuthStateChanged(auth, (user) => {
             })
         })
     } if (user.isAnonymous && user != null) {
-        document.getElementById('gSignInWrapper').style.display = 'block'
-        document.getElementById('pencil').style.display = 'none'
-        nameElem.innerHTML = 'Guest'
+        if (pageName != 'playing') {
+            document.getElementById('gSignInWrapper').style.display = 'block'
+            document.getElementById('pencil').style.display = 'none'
+            nameElem.innerHTML = 'Guest'
+        }
     } if (!user.isAnonymous) {
-        document.getElementById('pencil').style.display = 'inline'
-        document.getElementById('gSignInWrapper').style.display = 'none'
+        if (pageName != 'playing') {
+            document.getElementById('pencil').style.display = 'inline'
+            document.getElementById('gSignInWrapper').style.display = 'none'
+        } else {
+            document.getElementById('pencil').style.display = 'none'
+            document.getElementById('gSignInWrapper').style.display = 'none'
+        }
     } if (user != null && !user.isAnonymous) {
-        getDoc(doc(db, 'users', user.uid)).then((uData) => {
-            if (uData.exists()) {
-                const username = uData.data()['username']
-                nameElem.innerHTML = username
-            } else {
-                setDoc(doc(db, 'users', user.uid), {
-                    username: 'Guest'
-                })
-            }
-        })
+        if (pageName != 'playing') {
+            getDoc(doc(db, 'users', user.uid)).then((uData) => {
+                if (uData.exists()) {
+                    const username = uData.data()['username']
+                    nameElem.innerHTML = username
+                } else {
+                    setDoc(doc(db, 'users', user.uid), {
+                        username: 'Guest'
+                    })
+                }
+            })
+        }
     }
 })
 
@@ -197,6 +211,7 @@ if (pageName == 'waiting') {
     const copyLink = document.getElementById('copyLink')
     const endGameBtn = document.getElementById('endGame')
     const aliasForm = document.querySelector('#aliasFormOwner')
+    aliasForm.style.display = 'inline'
 
     get(ref(rdb, 'games/' + gameCode + '/ownerUid')).then((data) => {
         const ownerUid = data.val()
@@ -205,8 +220,7 @@ if (pageName == 'waiting') {
             startBtn.style.display = 'inline'
             endGameBtn.style.display = 'inline'
             qrCode.style.display = 'inline'
-            qrCode.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://aliasgame.xyz/join-game?code=${gameCode}&color=1d1d1d`
-            aliasForm.style.display = 'inline'
+            qrCode.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://aliasgame.xyz/join-game?code=${gameCode}&bgcolor=222629&color=86c232`
         }
     })
 
@@ -283,14 +297,21 @@ if (pageName == 'waiting') {
     })
 
     startBtn.onclick = function (e) {
-        const uRef = ref(rdb, `games/${gameCode}/isStarted`)
-        get(uRef).then((snapshot) => {
-            const updates = {}
-            updates['games/' + gameCode + '/isStarted'] = true
-
-            return update(ref(rdb), updates)
-        }). then(() => {
-            window.location.replace(`playing.html?code=${gameCode}`)
+        get(ref(rdb, 'games/' + gameCode + '/aliases')).then((data) => {
+            const aliases = data.val()
+            if (aliases == null) {
+                alert('You must enter some aliases first')
+            } else {
+                const uRef = ref(rdb, `games/${gameCode}/isStarted`)
+                get(uRef).then((snapshot) => {
+                    const updates = {}
+                    updates['games/' + gameCode + '/isStarted'] = true
+        
+                    return update(ref(rdb), updates)
+                }). then(() => {
+                    window.location.replace(`playing.html?code=${gameCode}`)
+                })
+            }
         })
     }
 
@@ -359,34 +380,22 @@ if (pageName == 'join-game') {
 
 // Play Screen
 if (pageName == 'playing') {
+    const signedInAsText = document.getElementById('signedInAsText')
+    signedInAsText.style.display = 'none'
+
     var params = new URLSearchParams(window.location.search);
     const gameCode = params.get('code')
 
     get(ref(rdb, 'games/' + gameCode + '/aliases')).then((data) => {
         const aliases = data.val()
 
-        // var target = document.querySelector(".name-list");
-        // var template = "<h1 id='h1-~id~' class=\"playing-h1\">~id~</h1>";
-
-        // aliases.forEach(function(item) {
-        //     target.insertAdjacentHTML("beforeend", template.replace(/~id~/g, item));
-
-        //     document.getElementById(`h1-${item}`).onclick = function(e) {
-        //         if (document.getElementById(`h1-${item}`).style.color = 'white') {
-        //             document.getElementById(`h1-${item}`).style.color = 'red'
-        //         } else {
-        //             document.getElementById(`h1-${item}`).style.color = 'white'
-        //         }
-        //     }
-
-        // });
-
         var list = document.createElement('ul');
 
         aliases.forEach(function (item) {
             var li = document.createElement('p');
+            var rNum = Math.floor(Math.random() * 10000)
             li.textContent = item;
-            li.id = item
+            li.id = `${item}-${rNum}`
             li.className = 'item'
             list.appendChild(li);
             // Inject into the DOM
@@ -409,7 +418,39 @@ if (pageName == 'playing') {
         OnEvent(document).on('click', '.item', function (e) {
             const itemId = e.target.id
 
-            document.getElementById(itemId).style.color = 'red'
+            if (document.getElementById(itemId).style.borderColor == 'red') {
+                document.getElementById(itemId).style.color = 'white'
+                document.getElementById(itemId).style.borderColor = '#86c232'
+            } else {
+                document.getElementById(itemId).style.color = 'red'
+                document.getElementById(itemId).style.borderColor = 'red'
+            }
         });
+    })
+
+    get(ref(rdb, 'games/' + gameCode + '/ownerUid')).then((data) => {
+        const ownerUid = data.val()
+
+        if (ownerUid == auth.currentUser.uid) {
+            const endGameBtn = document.getElementById('endGame')
+
+            endGameBtn.style.display = 'inline'
+            endGameBtn.onclick = function(e) {
+                const updates = {}
+
+                updates['games/' + gameCode + '/isStarted'] = false
+                updates['games/' + gameCode + '/redirectPlayers'] = true
+                updates['games/' + gameCode + '/aliases'] = []
+                update(ref(rdb), updates)
+
+            }
+        }
+    })
+
+    onValue(ref(rdb, 'games/' + gameCode + '/redirectPlayers'), (data) => {
+        const redirect = data.val()
+        if (redirect) {
+            window.location.replace(`waiting.html?code=${gameCode}`)
+        }
     })
 }
