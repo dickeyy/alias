@@ -64,3 +64,8 @@ option {
     width: 320px;
   }
 }
+
+.qrcode {
+  border: 3px solid #86c232;
+  border-radius: 13px;
+}

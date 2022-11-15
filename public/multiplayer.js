@@ -1,7 +1,7 @@
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-analytics.js";
-import { getFirestore, Timestamp, doc, setDoc, getDoc, deleteDoc, addDoc, collection, updateDoc, arrayUnion  } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider, signInAnonymously, linkWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
-import { getDatabase, ref, onValue, set, get, child , push, update} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-database.js"
+import { getFirestore, doc, setDoc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-auth.js";
+import { getDatabase, ref, onValue, set, get, update} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-database.js"
 import { app } from './app.js'
 
 // firebase stuff
@@ -160,7 +160,6 @@ if (pageName == 'play') {
                         alert('That game is no longer active')
                     } else {
                         get(ref(rdb, 'games/' + enteredId + '/playerCount')).then((data) => {
-                            const enterAlias = prompt('Enter Your Alias')
 
                             var playerCountBefore = data.val()
                             playerCountBefore ++ 
@@ -174,18 +173,13 @@ if (pageName == 'play') {
                                     
                                     if (aliases == null) {
                                         const updates = {}
-                                        const aliases = [`${enterAlias}`]
-                                        updates['games/' + enteredId + '/aliases'] = aliases
                                         updates['games/' + enteredId + '/playerCount'] = playerCountBefore
                                         updates['games/' + enteredId + '/playerUids'] = uids
                                         return update(ref(rdb), updates)
                                     } else {
-                                        const string = `${enterAlias}`
-                                        aliases.push(string)
                                         const updates = {}
                                         updates['games/' + enteredId + '/playerCount'] = playerCountBefore
                                         updates['games/' + enteredId + '/playerUids'] = uids
-                                        updates['games/' + enteredId + '/aliases'] = aliases
                                         return update(ref(rdb), updates)
                                     }
                                 }).then(() => {
@@ -208,7 +202,6 @@ if (pageName == 'waiting') {
 
     const qrCode = document.getElementById('qrcode')
     const startBtn = document.getElementById('startGame')
-    const copyLink = document.getElementById('copyLink')
     const endGameBtn = document.getElementById('endGame')
     const aliasForm = document.querySelector('#aliasFormOwner')
     aliasForm.style.display = 'inline'
@@ -219,9 +212,10 @@ if (pageName == 'waiting') {
         if (auth.currentUser.uid == ownerUid) {
             startBtn.style.display = 'inline'
             endGameBtn.style.display = 'inline'
-            qrCode.style.display = 'inline'
-            qrCode.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://aliasgame.xyz/join-game?code=${gameCode}&bgcolor=222629&color=86c232`
         }
+
+        qrCode.style.display = 'inline'
+        qrCode.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x2000&data=https://aliasgame.xyz/join-game?code=${gameCode}&bgcolor=222629&color=FFFFFF&format=svg`
     })
 
     aliasForm.addEventListener('submit', (e) => {
@@ -229,22 +223,29 @@ if (pageName == 'waiting') {
         const alias = aliasForm['alias'].value
 
         get(ref(rdb, 'games/' + gameCode + '/aliases')).then((data) => {
-            const updates = {}
-            if (data.val() == null) {
-                const aliases = []
-                const string = `${alias}`
-                aliases.push(string)
-                updates['games/' + gameCode + '/aliases'] = aliases
-                update(ref(rdb), updates)
-                aliasForm.reset()
-            } else {
-                const string = `${alias}`
-                const array = data.val()
-                array.push(string)
-                updates['games/' + gameCode + '/aliases'] = array
-                update(ref(rdb), updates)
-                aliasForm.reset()
-            }
+            get(ref(rdb, 'games/' + gameCode + '/inAliases')).then((data2) => {
+                const updates = {}
+                const updates2 = {}
+
+                var rNum = Math.floor(Math.random() * 10000)
+                if (data.val() == null) {
+                    const aliases = []
+                    const string = `${alias}-${rNum}`
+                    aliases.push(string)
+                    updates['games/' + gameCode + '/aliases'] = aliases
+                    updates['games/' + gameCode + '/inAliases'] = aliases
+                    update(ref(rdb), updates)
+                    aliasForm.reset()
+                } else {
+                    const string = `${alias}-${rNum}`
+                    const array = data.val()
+                    array.push(string)
+                    updates['games/' + gameCode + '/aliases'] = array
+                    updates['games/' + gameCode + '/inAliases'] = array
+                    update(ref(rdb), updates)
+                    aliasForm.reset()
+                }
+            })
         })
     })
 
@@ -324,14 +325,6 @@ if (pageName == 'waiting') {
         })
     }
 
-    copyLink.onclick = function (e) {
-        copyLink.select();
-        copyLink.setSelectionRange(0, 99999); /* For mobile devices */
-      
-        copyLink.value = `https://aliasgame.xyz/join-game?code=${gameCode}`
-        navigator.clipboard.writeText(copyLink.value);
-        copyLink.value = 'aliasgame.xyz/play'
-    }
 }
 
 // Join via link (qr code)
@@ -386,21 +379,26 @@ if (pageName == 'playing') {
     var params = new URLSearchParams(window.location.search);
     const gameCode = params.get('code')
 
+    get(ref(rdb, 'games/' + gameCode + '/ownerUid')).then((data1) => {
+        const ownerUid = data1.val()
+    
+
     get(ref(rdb, 'games/' + gameCode + '/aliases')).then((data) => {
-        const aliases = data.val()
+            const aliases = data.val()
 
-        var list = document.createElement('ul');
+            var list = document.createElement('ul');
 
-        aliases.forEach(function (item) {
-            var li = document.createElement('p');
-            var rNum = Math.floor(Math.random() * 10000)
-            li.textContent = item;
-            li.id = `${item}-${rNum}`
-            li.className = 'item'
-            list.appendChild(li);
-            // Inject into the DOM
-            var app = document.getElementById('name-list');
-            app.appendChild(list);
+            aliases.forEach(function (item) {
+                var li = document.createElement('p');
+                var splitName = item.split('-')[0]
+                li.textContent = splitName;
+                li.id = `${item}`
+                li.className = 'item'
+                list.appendChild(li);
+                // Inject into the DOM
+                var app = document.getElementById('name-list');
+                app.appendChild(list);
+
         })
 
         const OnEvent = (doc) => {
@@ -416,20 +414,136 @@ if (pageName == 'playing') {
         
         
         OnEvent(document).on('click', '.item', function (e) {
+
+            if (auth.currentUser.uid != ownerUid) {
+                return
+            }
+
+
             const itemId = e.target.id
 
             if (document.getElementById(itemId).style.borderColor == 'red') {
                 document.getElementById(itemId).style.color = 'white'
                 document.getElementById(itemId).style.borderColor = '#86c232'
+                document.getElementById(itemId).style.textDecoration = 'none'
+
+                get(ref(rdb, 'games/' + gameCode + '/outAliases')).then((data) => {
+                    const updates = {}
+                    const outAliases = data.val()
+
+                    const index = outAliases.indexOf(itemId)
+                    if (index !== -1) {
+                        outAliases.splice(index, 1);
+                    }
+
+                    updates['games/' + gameCode + '/outAliases'] = outAliases
+                    update(ref(rdb), updates)
+                })
+
+                get(ref(rdb, 'games/' + gameCode + '/inAliases')).then((data) => {
+
+                    const updates = {}
+                    const inAliases = data.val()
+
+                    inAliases.push(itemId)
+
+                    updates['games/' + gameCode + '/inAliases'] = inAliases
+                    update(ref(rdb), updates)
+
+                })
+
             } else {
                 document.getElementById(itemId).style.color = 'red'
                 document.getElementById(itemId).style.borderColor = 'red'
+                document.getElementById(itemId).style.textDecoration = 'line-through'
+
+                get(ref(rdb, 'games/' + gameCode + '/outAliases')).then((data) => {
+                    const updates = {}
+                    if (data.val() == null) {
+
+                        const outAliases = []
+                        const string = `${itemId}`
+                        outAliases.push(string)
+                        updates['games/' + gameCode + '/outAliases'] = outAliases
+                        update(ref(rdb), updates)
+
+                    } else {
+
+                        const string = `${itemId}`
+                        const array = data.val()
+                        array.push(string)
+                        updates['games/' + gameCode + '/outAliases'] = array
+                        update(ref(rdb), updates)
+                        
+                    }
+                })
+
+                get(ref(rdb, 'games/' + gameCode + '/inAliases')).then((data) => {
+                    const updates = {}
+                    const inAliases = data.val()
+
+                    const index2 = inAliases.indexOf(itemId)
+                    if (index2 !== -1) {
+                        inAliases.splice(index2, 1);
+                    }
+
+                    updates['games/' + gameCode + '/inAliases'] = inAliases
+                    update(ref(rdb), updates)
+                })
+
+                
             }
         });
+    })
+    })
+
+    onValue(ref(rdb, "games/" + gameCode + "/outAliases"), (snapshot) => {
+        const outAliases = snapshot.val();
+
+        if (outAliases != null) {
+
+            outAliases.forEach(function (item) {
+
+                document.getElementById(item).style.color = 'red'
+                document.getElementById(item).style.borderColor = 'red'
+                document.getElementById(item).style.textDecoration = 'line-through'
+
+            })
+
+        }
+        
+    })
+
+    const winModal = document.getElementById('winModal')
+    const winModalName = document.getElementById('winner-alias')
+
+    onValue(ref(rdb, "games/" + gameCode + "/inAliases"), (snapshot) => {
+        const inAliases = snapshot.val();
+
+        if (inAliases != null) {
+
+            if (inAliases.length == 1) {
+                winModal.style.display = 'block'
+                const splitName = inAliases[0].split('-')[0]
+                winModalName.textContent = `${splitName} wins!`
+            }
+
+            inAliases.forEach(function (item) {
+
+                document.getElementById(item).style.color = 'white'
+                document.getElementById(item).style.borderColor = '#86c232'
+                document.getElementById(item).style.textDecoration = 'none'
+
+            })
+
+        }
+        
     })
 
     get(ref(rdb, 'games/' + gameCode + '/ownerUid')).then((data) => {
         const ownerUid = data.val()
+
+        const endGameBtn2 = document.getElementById('endGame2')
 
         if (ownerUid == auth.currentUser.uid) {
             const endGameBtn = document.getElementById('endGame')
@@ -441,8 +555,23 @@ if (pageName == 'playing') {
                 updates['games/' + gameCode + '/isStarted'] = false
                 updates['games/' + gameCode + '/redirectPlayers'] = true
                 updates['games/' + gameCode + '/aliases'] = []
+                updates['games/' + gameCode + '/outAliases'] = []
+                updates['games/' + gameCode + '/inAliases'] = []
                 update(ref(rdb), updates)
 
+            }
+
+            endGameBtn2.style.display = 'inline'
+            endGameBtn2.onclick = function(e) {
+                const updates = {}
+    
+                updates['games/' + gameCode + '/isStarted'] = false
+                updates['games/' + gameCode + '/redirectPlayers'] = true
+                updates['games/' + gameCode + '/aliases'] = []
+                updates['games/' + gameCode + '/outAliases'] = []
+                updates['games/' + gameCode + '/inAliases'] = []
+                update(ref(rdb), updates)
+    
             }
         }
     })
