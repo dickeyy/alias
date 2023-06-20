@@ -194,7 +194,7 @@ export default function WaitingScreen(props: any) {
                     col-span-2
                 '
             >
-                <div className="flex flex-row items-center justify-center">
+                <div className="flex flex-row items-center justify-evenly">
                     
                     <Button
                         variant="primary"
