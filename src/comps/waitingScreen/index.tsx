@@ -48,7 +48,7 @@ export default function WaitingScreen(props: any) {
                     >
                         Game code:
                     </p>
-                    <h1 className="text-8xl font-bold text-center text-green-500">
+                    <h1 className="sm:text-8xl text-6xl font-bold text-center text-green-500">
                         {props.id}
                     </h1>
                 </div>
