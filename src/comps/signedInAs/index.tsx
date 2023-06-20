@@ -1,5 +1,5 @@
 import { FaUserEdit, FaArrowRight } from 'react-icons/fa'
-import editDisplayName from '@/firebase/auth/editDisplayName'
+import editDisplayName from '../../firebase/auth/editDisplayname'
 import { useState } from 'react'
 import Input from '../input'
 import IconButton from '../iconButton'
