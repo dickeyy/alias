@@ -9,8 +9,26 @@ export default function Button(props: {
 }) {
 
     return (
-        <>
-            {props.isDisabled ? (
+        <div>
+
+            <button 
+                className={`
+                    ${props.className}
+                    bg-${props.color}-700
+                    text-${props.textColor}-100
+                    hover:bg-opacity-80
+                    transition
+                    duration-200
+                    ease-in-out
+                    rounded-xl
+                    px-4
+                    py-2
+                `} 
+                onClick={props.onClick}
+            >
+                {props.text}
+            </button>
+            {/* {props.isDisabled ? (
                 <button 
                 className={`
                     ${props.className}
@@ -49,7 +67,7 @@ export default function Button(props: {
                 >
                     {props.text}
                 </button>
-            )}
-        </>
+            )} */}
+        </div>
     )
 }
