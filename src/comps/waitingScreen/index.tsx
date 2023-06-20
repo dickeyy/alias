@@ -196,39 +196,101 @@ export default function WaitingScreen(props: any) {
             >
                 <div className="flex flex-row items-center justify-evenly">
                     
-                    <Button
-                        variant="primary"
-                        color="green"
-                        text='Start Game'
-                        textColor="slate"
-                        className={`
-                            h-16
-                            text-xl
-                            font-medium
-                            mr-2
-                        `}
-                        onClick={() => {
-                            startGame()
-                        }}
-                        isDisabled={!props.isHost}
-                    />
+                    {!props.isHost ? (
+                        <button 
+                            className={`
+                                h-16
+                                text-xl
+                                font-medium
+                                mr-2
+                                bg-green-700
+                                text-slate-100
+                                opacity-40
+                                transition
+                                duration-200
+                                ease-in-out
+                                rounded-xl
+                                cursor-not-allowed
+                                px-4
+                                py-2
+                            `} 
+                            disabled
+                            aria-aria-disabled
+                        >
+                            Start Game
+                        </button>
+                    ) : (
+                        <button 
+                            className={`
+                                h-16
+                                text-xl
+                                font-medium
+                                mr-2
+                                bg-green-700
+                                text-slate-100
+                                hover:bg-opacity-80
+                                transition
+                                duration-200
+                                ease-in-out
+                                rounded-xl
+                                px-4
+                                py-2
+                            `} 
+                            onClick={() => {
+                                startGame()
+                            }}
+                        >
+                            Start Game
+                        </button>
+                    )}
 
-                    <Button
-                        variant="primary"
-                        color="red"
-                        text='Close Lobby'
-                        textColor="slate"
-                        className={`
-                            h-16
-                            text-xl
-                            font-medium
-                            ml-1
-                        `}
-                        onClick={() => {
-                            props.closeLobby()
-                        }}
-                        isDisabled={!props.isHost}
-                    />
+                    {!props.isHost ? (
+                        <button 
+                            className={`
+                                h-16
+                                text-xl
+                                font-medium
+                                mr-2
+                                bg-red-700
+                                text-slate-100
+                                opacity-40
+                                transition
+                                duration-200
+                                ease-in-out
+                                rounded-xl
+                                cursor-not-allowed
+                                px-4
+                                py-2
+                            `} 
+                            disabled
+                            aria-aria-disabled
+                        >
+                            Close Lobby
+                        </button>
+                    ) : (
+                        <button 
+                            className={`
+                                h-16
+                                text-xl
+                                font-medium
+                                mr-2
+                                bg-red-700
+                                text-slate-100
+                                hover:bg-opacity-80
+                                transition
+                                duration-200
+                                ease-in-out
+                                rounded-xl
+                                px-4
+                                py-2
+                            `} 
+                            onClick={() => {
+                                props.closeLobby()
+                            }}
+                        >
+                            Close Lobby
+                        </button>
+                    )}
 
                 </div>
 

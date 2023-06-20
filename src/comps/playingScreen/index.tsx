@@ -114,24 +114,55 @@ export default function PlayingScreen(props: any) {
                         p-5
                     '
                 >
-
-                    <Button
-                        variant="primary"
-                        color="red"
-                        text='Back to Lobby'
-                        textColor="slate"
-                        className={`
-                            h-16
-                            text-xl
-                            w-[50%]
-                            font-medium
-                            ml-1
-                        `}
-                        onClick={() => {
-                            props.backToLobby()
-                        }}
-                        isDisabled={!props.isHost}
-                    />
+                    {!props.isHost ? (
+                        <button 
+                            className={`
+                                h-16
+                                text-xl
+                                w-[50%]
+                                font-medium
+                                ml-1
+                                bg-red-700
+                                text-slate-100
+                                opacity-40
+                                transition
+                                duration-200
+                                ease-in-out
+                                rounded-xl
+                                cursor-not-allowed
+                                px-4
+                                py-2
+                            `} 
+                            disabled
+                            aria-aria-disabled
+                        >
+                            Back to Lobby
+                        </button>
+                    ) : (
+                        <button 
+                            className={`
+                                h-16
+                                text-xl
+                                w-[50%]
+                                font-medium
+                                ml-1
+                                bg-red-700
+                                text-slate-100
+                                hover:bg-opacity-80
+                                transition
+                                duration-200
+                                ease-in-out
+                                rounded-xl
+                                px-4
+                                py-2
+                            `} 
+                            onClick={() => {
+                                props.backToLobby()
+                            }}
+                        >
+                            Back to Lobby
+                        </button>
+                    )}
 
                 </div>
             </div>
