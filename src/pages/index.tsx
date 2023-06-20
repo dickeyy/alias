@@ -89,7 +89,7 @@ export default function Home() {
 					col-span-2
 					sm:col-span-1
 				">
-					<Button 
+					{/* <Button 
 						text="Create a game"
 						variant="primary"
 						color="green"
@@ -103,7 +103,29 @@ export default function Home() {
 						onClick={() => {
 							createGame(user)
 						}}
-					/>
+					/> */}
+					<button 
+						className={`
+							w-full
+							h-16
+							text-xl
+							font-medium
+							bg-green-700
+							text-slate-100
+							hover:bg-opacity-80
+							transition
+							duration-200
+							ease-in-out
+							rounded-xl
+							px-4
+							py-2
+						`} 
+						onClick={() => {
+							createGame(user)
+						}}
+					>
+						Create a game
+					</button>
 				</div>
 
 				<div className="
