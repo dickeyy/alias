@@ -26,6 +26,8 @@ export default function Home() {
 	const [user, setUser] = useState<any>(null)
 	const [isSignedIn, setIsSignedIn] = useState<boolean>(false)
 
+	const [showMore, setShowMore] = useState<boolean>(false)
+
 	// on load signin anonymously with firebase
 	useEffect(() => {
 		
@@ -62,7 +64,7 @@ export default function Home() {
 			<div className="
 				grid 
 				items-center justify-center 
-				grid-cols-1 grid-flow-row gap-4
+				grid-cols-1 grid-flow-row sm:gap-4 gap-3
 				sm:grid-cols-2
 			">
 				<div className="
@@ -141,7 +143,7 @@ export default function Home() {
 					<Input
 						placeholder="Enter game code"
 						className={`
-							sm:w-64
+							sm:w-full
 							h-16
 							text-xl
 							font-medium
@@ -184,6 +186,117 @@ export default function Home() {
 				">	
 					<SignedInAs user={user} />
 				</div>
+				{showMore ? (
+					<div className="
+						flex flex-row
+						bg-white bg-opacity-[8%]
+						rounded-xl
+						p-5
+						text-left
+						justify-center
+						items-center
+						col-span-2
+						w-full
+					">	
+						<div className="flex flex-col text-left leading-7">
+							<h1 className="text-3xl font-bold text-left mb-5">
+								What is it?
+							</h1>
+							<p className="text-xl text-zinc-400">
+								This is a website version of a game my family plays. We used to have to play on paper, however, we usually only play it on vacation. As you can imagine, finding large pieces of paper in hotels or rental houses can be hard. So I decided to make an easier way to play.
+							</p>
+							<hr className='
+								my-5
+								border-1
+								border-zinc-700
+							'></hr>
+
+							<h1 className="text-3xl font-bold text-left mb-5">
+								Click to see how to play!
+							</h1>
+							<p className="text-xl text-zinc-400">
+							The game itself is simple, here are the steps for the website version:
+							</p>
+							<div className="flex flex-col p-5 pb-0 leading-[20px]">
+								<p className="text-xl leading-relaxed text-zinc-400">
+								1. Have a group of at least 4 people. The more you have the better!
+								</p>
+								<p className="text-xl leading-relaxed text-zinc-400">
+								2. On the website, click "Create Game".
+								</p>
+								<p className="text-xl leading-relaxed text-zinc-400">
+								3. Put the host device somewhere everyone can see (works best if your screencast to a TV). The host can sign in with Google and remotely control the game!
+								</p>
+								<p className="text-xl leading-relaxed text-zinc-400">
+								4. In this version, you don't have to specify an MC, so everyone can play!
+								</p>
+								<p className="text-xl leading-relaxed text-zinc-400">
+								5. Players can then either scan the QR code on the host device or go to the website and enter the code displayed.
+								</p>
+								<p className="text-xl leading-relaxed text-zinc-400">
+								6. Now, every player must think of an "Alias". The Alias needs to be either the name of a famous person or someone every player knows. So for example I could either pick "Joe Biden" or the name of another player. The alias can also be a fictional character.
+								</p>
+								<p className="text-xl leading-relaxed text-zinc-400">
+								7. Once you have your alias, enter it on either your device or someone else's (devices are not linked to aliases so if you don't have a phone, don't worry you can use someone else's)
+								</p>
+								<p className="text-xl leading-relaxed text-zinc-400">
+								8. When everyone has entered their alias, the host will click "Start Game" 
+								</p>
+								<p className="text-xl leading-relaxed text-zinc-400">
+								9. You will then be displayed with a page where you can see a display of every alias. Anyone who has joined the game will be able to see it on their device or you can look at the host device.
+								</p>
+								<p className="text-xl leading-relaxed text-zinc-400">
+								10. Now choose who will go first (for the first round it doesn't matter who). 
+								</p>
+								<p className="text-xl leading-relaxed text-zinc-400">
+								11. The first player will then read all the aliases and guess the true identity of one alias. Say "Kyle, are you John Stamos?"
+								</p>
+								<p className="text-xl leading-relaxed text-zinc-400">
+								12. If the player guesses it correctly, the host will click on the alias that was guessed and it will cross out on all devices. The player that they guessed is now out and can't be guessed again. Then, the players turn continues until they make a wrong guess. 
+								</p>
+								<p className="text-xl leading-relaxed text-zinc-400">
+								13. If you guess wrong, whoever the original player tried to guess will now repeat step 11. 
+								</p>
+								<p className="text-xl leading-relaxed text-zinc-400">
+								14. This cycle continues until one alias is remaining, the true identity of that alias is the winner! 
+								</p>
+								<p className="text-xl leading-relaxed text-zinc-400">
+								15. If the host accidentally clicks on the wrong alias, don't worry, they can click it again and it will come back.
+								</p>
+							</div>
+
+							<div className="flex flex-col p-5 pb-0 leading-[20px] justify-center items-center text-center">
+								<p className="text-xl text-zinc-400 hover:text-green-700 cursor-pointer" 
+									onClick={() => {
+										setShowMore(!showMore)
+									}}
+								>
+									Close directions
+								</p>
+							</div>
+						</div>
+					</div>
+				) : (
+					<div className="
+						flex flex-row
+						bg-white bg-opacity-[8%]
+						rounded-xl
+						p-5
+						text-left
+						justify-center
+						items-center
+						col-span-2
+						w-full
+					">	
+						<h1 className="text-3xl font-bold text-left hover:text-green-700 cursor-pointer"
+							onClick={() => {
+								setShowMore(!showMore)
+							}}
+						>
+							Click to see how to play!
+						</h1>
+					</div>
+				)}
 			</div>
 		
 		</main>
