@@ -212,7 +212,7 @@ export default function Home() {
 							'></hr>
 
 							<h1 className="text-3xl font-bold text-left mb-5">
-								Click to see how to play!
+								How do I play?
 							</h1>
 							<p className="text-xl text-zinc-400">
 							The game itself is simple, here are the steps for the website version:
