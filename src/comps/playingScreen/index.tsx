@@ -1,5 +1,6 @@
 import React from "react"
 import Button from "../button"
+import Footer from "../footer"
 
 export default function PlayingScreen(props: any) {
 
@@ -166,6 +167,7 @@ export default function PlayingScreen(props: any) {
 
                 </div>
             </div>
+            <Footer />
         </div>
     )
 

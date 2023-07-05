@@ -12,6 +12,7 @@ import IconButton from '@/comps/iconButton'
 import { FaArrowRight } from 'react-icons/fa'
 import SignedInAs from '@/comps/signedInAs'
 import Toast from '@/comps/toast'
+import Footer from '@/comps/footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -298,6 +299,8 @@ export default function Home() {
 					</div>
 				)}
 			</div>
+
+			<Footer />
 		
 		</main>
 	)

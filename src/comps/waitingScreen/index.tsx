@@ -5,6 +5,7 @@ import IconButton from "../iconButton"
 import Input from "../input"
 import SignedInAs from "../signedInAs"
 import { FaArrowRight } from 'react-icons/fa'
+import Footer from "../footer"
 
 export default function WaitingScreen(props: any) {
 
@@ -314,7 +315,7 @@ export default function WaitingScreen(props: any) {
                 </div>
 
             </div>
-
+            <Footer />
         </div>
     )
 }
