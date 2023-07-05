@@ -315,7 +315,16 @@ export default function WaitingScreen(props: any) {
                 </div>
 
             </div>
-            <Footer />
+
+            <div className="flex flex-col
+                    rounded-xl
+                    p-5
+                    justify-center
+                    items-center
+                    col-span-2
+                    ">
+                <Footer />
+            </div>
         </div>
     )
 }
