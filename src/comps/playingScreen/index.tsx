@@ -167,7 +167,7 @@ export default function PlayingScreen(props: any) {
 
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 
