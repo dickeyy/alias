@@ -6,6 +6,7 @@ import { getAuth,  } from "firebase/auth";
 import firebase, {rdb} from '@/firebase/config';
 import { ref, onValue, set } from "firebase/database";
 import { FaArrowRight, FaVolumeMute, FaVolumeUp } from 'react-icons/fa'
+import YouTube from 'react-youtube';
 
 import SEOHead from '@/comps/seoHead'
 import Input from '@/comps/input';
@@ -212,20 +213,65 @@ export default function GameLobby() {
  
     const [audioPlaying , setAudioPlaying] = useState<boolean>(false)
 
+    const opts = {
+        playerVars: {
+          // https://developers.google.com/youtube/player_parameters
+          autoplay: 1,
+          disablekb: 1,
+          fs: 0,
+          loop: 1,
+          start: 0,
+        },
+    };
+
+    //make functions to pause and play the audio
+    const playAudio = () => {
+        // get the youtube video
+        const youtube = document.getElementById('youtube') as HTMLIFrameElement
+        youtube.contentWindow?.postMessage('{"event":"command","func":"' + 'playVideo' + '","args":""}', '*');
+    }
+    const pauseAudio = () => {
+        // get the youtube video
+        const youtube = document.getElementById('youtube') as HTMLIFrameElement
+        youtube.contentWindow?.postMessage('{"event":"command","func":"' + 'pauseVideo' + '","args":""}', '*');
+    }
+
+
     return (
         <main className={`flex min-h-screen flex-col items-center justify-center sm:p-24 p-2 pt-10 pb-10 ${inter.className}`}>
 			<SEOHead title={"Play"} />
 
-            <audio id="audio" src="/background.mp3" preload="auto"></audio>
+            <YouTube
+                videoId={'Uj93hicGDNc'}                  // defaults -> ''
+                id={'youtube'}                       // defaults -> ''
+                className={'h-0 w-0'}                // defaults -> ''
+                iframeClassName={'h-0 w-0'}          // defaults -> ''
+                // style={object}                    // defaults -> {}
+                title={'string'}                    // defaults -> ''
+                // loading={'string'}                  // defaults -> undefined
+                opts={opts}                        // defaults -> {}
+                onReady={() => {
+                    // playAudio()
+                    setAudioPlaying(true)
+                }}                    // defaults -> noop
+                onPlay={() => {
+                    // playAudio()
+                    setAudioPlaying(true)
+                }}                     // defaults -> noop
+                onPause={() => {
+                    // pauseAudio()
+                    setAudioPlaying(false)
+                }}
+            />
 
             <div className="flex flex-row top-5 right-5 absolute">
                 
                 <button className="text-2xl font-bold text-white/40 hover:text-green-700 transition duration-200 ease-in-out" onClick={() => {
-                    const audio = document.getElementById('audio') as HTMLAudioElement
+                    // const audio = document.getElementById('audio') as HTMLAudioElement
                     if (audioPlaying) {
-                        audio.pause()
+                        pauseAudio()
                     } else {
-                        audio.play()
+                        playAudio()
                     }
                     // toggle audio playing
                     setAudioPlaying(!audioPlaying)
