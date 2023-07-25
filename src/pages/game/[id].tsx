@@ -6,7 +6,6 @@ import { getAuth,  } from "firebase/auth";
 import firebase, {rdb} from '@/firebase/config';
 import { ref, onValue, set } from "firebase/database";
 import { FaArrowRight, FaVolumeMute, FaVolumeUp } from 'react-icons/fa'
-import ReactPlayer from 'react-player';
 
 import SEOHead from '@/comps/seoHead'
 import Input from '@/comps/input';
