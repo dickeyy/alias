@@ -14,7 +14,7 @@ export default function Toast({ title, type, id, duration }: { title: string, ty
         return (
                 <AnimatePresence>
                     {isVis && (
-                        <motion.div id={id} className="flex items-center w-full max-w-xs p-4 mb-4 text-white bg-green-500 bg-opacity-20 rounded-[12px] shadow dark:text-gray-400 z-50 absolute bottom-0" role="alert"
+                        <motion.div id={id} className="flex items-center w-full max-w-xs p-4 mb-4 text-white bg-green-500 bg-opacity-20 rounded-[12px] shadow dark:text-gray-400 z-50 fixed bottom-0" role="alert"
                             initial={{
                                 y: 10,
                                 opacity: 0
@@ -42,7 +42,7 @@ export default function Toast({ title, type, id, duration }: { title: string, ty
         return (
             <AnimatePresence>
                 {isVis && (
-                    <motion.div id={id} className="flex items-center w-full max-w-xs p-4 mb-4 text-white bg-red-500 bg-opacity-20 rounded-[12px] shadow dark:text-gray-400 z-50 absolute bottom-0" role="alert"
+                    <motion.div id={id} className="flex items-center w-full max-w-xs p-4 mb-4 text-white bg-red-500 bg-opacity-20 rounded-[12px] shadow dark:text-gray-400 z-50 fixed bottom-0" role="alert"
                         initial={{
                             y: 10,
                             opacity: 0
