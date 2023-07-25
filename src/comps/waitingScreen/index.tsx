@@ -4,7 +4,7 @@ import Button from "../button"
 import IconButton from "../iconButton"
 import Input from "../input"
 import SignedInAs from "../signedInAs"
-import { FaArrowRight } from 'react-icons/fa'
+import { FaArrowRight, FaVolumeMute } from 'react-icons/fa'
 import Footer from "../footer"
 
 export default function WaitingScreen(props: any) {
@@ -49,7 +49,7 @@ export default function WaitingScreen(props: any) {
                     >
                         Game code:
                     </p>
-                    <h1 className="sm:text-8xl text-6xl font-bold text-center text-green-500">
+                    <h1 className="md:text-8xl sm:text-6xl text-6xl font-bold text-center text-green-500">
                         {props.id}
                     </h1>
                 </div>
@@ -144,42 +144,43 @@ export default function WaitingScreen(props: any) {
                 '
             >
                 
-                <div className="flex flex-row items-center justify-center">
-                    
-                <Input
-                    placeholder="Enter aliases"
-                    className={`
-                        w-64
-                        h-16
-                        text-xl
-                        font-medium
-                    `}
-                    value={props.enteredAlias}
-                    onChange={(e) => props.setEnteredAlias(e.target.value)}
-                />
+                <form className="flex flex-row items-center justify-center w-full" onSubmit={(e) => {
+                    e.preventDefault()
+                }}>
+                    <Input
+                        placeholder="Enter aliases"
+                        className={`
+                            w-[90%]
+                            h-16
+                            text-xl
+                            font-medium
+                        `}
+                        value={props.enteredAlias}
+                        onChange={(e) => props.setEnteredAlias(e.target.value)}
+                    />
 
-                <IconButton
-                    icon={
-                        <FaArrowRight />
-                    }
-                    variant="outline"
-                    color="green"
-                    loading={false}
-                    disabled={false}
-                    textColor="slate"
-                    className={`
-                        w-16
-                        h-16
-                        text-xl
-                        font-medium
-                        ml-2
-                    `}
-                    onClick={() => {
-                        props.onAddAlias()
-                    }}
-                />
+                    <IconButton
+                        icon={
+                            <FaArrowRight />
+                        }
+                        variant="outline"
+                        color="green"
+                        loading={false}
+                        disabled={false}
+                        textColor="slate"
+                        className={`
+                            w-16
+                            h-16
+                            text-xl
+                            font-medium
+                            ml-2
+                        `}
+                        onClick={() => {
+                            props.onAddAlias()
+                        }}
+                    />
 
-                </div>
+                </form>
 
             </div>
 
@@ -193,14 +194,16 @@ export default function WaitingScreen(props: any) {
                     items-center
                     sm:col-span-1
                     col-span-2
+                    w-full
                 '
             >
-                <div className="flex flex-row items-center justify-evenly">
+                <div className="flex flex-row items-center">
                     
                     {!props.isHost ? (
                         <button 
                             className={`
                                 h-16
+                                w-full
                                 text-xl
                                 font-medium
                                 mr-2

@@ -4,8 +4,36 @@ import Footer from "../footer"
 
 export default function PlayingScreen(props: any) {
 
+    const [timer, setTimer] = React.useState<number>(0)
+    const [formattedTimer, setFormattedTimer] = React.useState<string>("00:00")
+
+    React.useEffect(() => {
+        // every second, update the timer
+        const interval = setInterval(() => {
+            setTimer(timer + 1)
+
+            // format the number to look like a minute:second timer
+            // if the number is less than 10, add a 0 in front of it
+            let minutes:any = Math.floor(timer / 60)
+            let seconds:any = timer % 60
+            if (minutes < 10) {
+                minutes = '0' + minutes.toString()
+            }
+            if (seconds < 10) {
+                seconds = "0" + seconds.toString()
+            }
+            setFormattedTimer(`${minutes}:${seconds}`)
+        },1000)
+
+        return () => clearInterval(interval)
+    }, [timer])
+
     return (
         <div className="items-center justify-center flex flex-col">
+
+            <div className="absolute top-5 left-10">
+                <p className="text-white/50 md:text-3xl sm:text-2xl lg:text-4xl xl:text-5xl font-bold">{formattedTimer}</p>
+            </div>
             <p
                 className='
                     text-3xl

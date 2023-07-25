@@ -5,7 +5,8 @@ import { useState, useEffect } from 'react'
 import { getAuth,  } from "firebase/auth";
 import firebase, {rdb} from '@/firebase/config';
 import { ref, onValue, set } from "firebase/database";
-import { FaArrowRight } from 'react-icons/fa'
+import { FaArrowRight, FaVolumeMute, FaVolumeUp } from 'react-icons/fa'
+import ReactPlayer from 'react-player';
 
 import SEOHead from '@/comps/seoHead'
 import Input from '@/comps/input';
@@ -14,6 +15,7 @@ import Button from '@/comps/button';
 import SignedInAs from '@/comps/signedInAs';
 import WaitingScreen from '@/comps/waitingScreen';
 import PlayingScreen from '@/comps/playingScreen';
+import Toast from '@/comps/toast';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -92,6 +94,17 @@ export default function GameLobby() {
     const addAlias = () => {
         // add alias to database
         // generate random id
+        // check if alias is not empty
+        if (enteredAlias.length === 0) {
+            setToastTitle('Alias cannot be empty')
+			setToastType('error')
+			setToast(true)
+			setTimeout(() => {
+				setToast(false)
+			}, 5100)
+            return
+        }
+
         let aliasId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
         set(ref(db, `games/${id}/aliases`), {
             ...gameData.aliases,
@@ -102,6 +115,14 @@ export default function GameLobby() {
         }).then(() => {
             // set entered alias to empty string
             setEnteredAlias("")
+
+            setToastTitle('Successfully added alias')
+			setToastType('success')
+			setToast(true)
+			setTimeout(() => {
+				setToast(false)
+			}, 5100)
+            return
         }).catch((err) => {
             console.error(err)
         })
@@ -114,7 +135,13 @@ export default function GameLobby() {
             ...gameData,
             isPlaying: true
         }).then(() => {
-            console.log("game started")
+            setToastTitle('Game started')
+			setToastType('success')
+			setToast(true)
+			setTimeout(() => {
+				setToast(false)
+			}, 5100)
+            return
         }).catch((err) => {
             console.error(err)
         })
@@ -180,10 +207,33 @@ export default function GameLobby() {
         })
     }
 
+    const [toast, setToast] = useState(false)
+	const [toastTitle, setToastTitle] = useState('')
+	const [toastType, setToastType] = useState('')
+ 
+    const [audioPlaying , setAudioPlaying] = useState<boolean>(false)
 
     return (
         <main className={`flex min-h-screen flex-col items-center justify-center sm:p-24 p-2 pt-10 pb-10 ${inter.className}`}>
 			<SEOHead title={"Play"} />
+
+            <audio id="audio" src="/background.mp3" preload="auto"></audio>
+
+            <div className="flex flex-row top-5 right-5 absolute">
+                
+                <button className="text-2xl font-bold text-white/40 hover:text-green-700 transition duration-200 ease-in-out" onClick={() => {
+                    const audio = document.getElementById('audio') as HTMLAudioElement
+                    if (audioPlaying) {
+                        audio.pause()
+                    } else {
+                        audio.play()
+                    }
+                    // toggle audio playing
+                    setAudioPlaying(!audioPlaying)
+                }}>
+                    {audioPlaying ? <FaVolumeUp /> : <FaVolumeMute />}
+                </button>
+            </div>
 
             {!isGameStarted ? (
 
@@ -209,6 +259,10 @@ export default function GameLobby() {
                     backToLobby={backToLobby}
                 />
             )}
+
+        {toast && (
+            <Toast title={toastTitle} type={toastType} id={'1'} duration={5000} />
+        )}
 
         </main>
     )

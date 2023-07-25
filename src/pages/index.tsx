@@ -131,7 +131,7 @@ export default function Home() {
 					</button>
 				</div>
 
-				<div className="
+				<form className="
 					flex flex-row
                     bg-white bg-opacity-[8%]
                     rounded-xl
@@ -140,7 +140,11 @@ export default function Home() {
                     items-center
 					col-span-2
 					sm:col-span-1
-				">
+				"
+					onSubmit={(e) => {
+						e.preventDefault()
+					}}
+				>
 					<Input
 						placeholder="Enter game code"
 						className={`
@@ -175,7 +179,7 @@ export default function Home() {
 						}}
 					/>
 
-				</div>
+				</form>
 				<div className="
 					flex flex-row
                     bg-white bg-opacity-[8%]
@@ -308,7 +312,7 @@ export default function Home() {
 
 
 function createGame(user: any) {
-	let gameCode = Math.floor(Math.random() * 1000000).toString()
+	let gameCode = Math.floor(Math.random() * 90000).toString()
 
 	// set game code in database
 	set(ref(db, `games/${gameCode}`), {

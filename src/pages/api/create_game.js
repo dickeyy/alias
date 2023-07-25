@@ -16,7 +16,7 @@ export default async function handler(req, res) {
         try {
 
             // generate a 6 digit random number
-            const random_number = Math.floor(100000 + Math.random() * 900000);
+            const random_number = Math.floor(100000 + Math.random() * 9000);
             
             const newData = {
                 
