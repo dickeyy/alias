@@ -56,7 +56,7 @@ export default function WaitingScreen(props: any) {
 
                 <div className="flex flex-row items-center justify-center mt-5">
                     <h1 className="text-2xl font-bold text-center">
-                        Join at <span className='text-green-700'>aliasgame.xyz</span>
+                        Join at <span className='text-green-700'>alias.dickey.gg</span>
                     </h1>
                 </div>
 
@@ -85,7 +85,7 @@ export default function WaitingScreen(props: any) {
                     <div className="
                         border-2 border-green-500 border-opacity-50 rounded-xl p-2"
                     >
-                        <img src={`https://api.qrserver.com/v1/create-qr-code/?size=200x2000&data=https://aliasgame.xyz/game/${props.id}&bgcolor=141414&color=FFFFFF&format=svg`}
+                        <img src={`https://api.qrserver.com/v1/create-qr-code/?size=200x2000&data=https://alias.dickey.gg/game/${props.id}&bgcolor=141414&color=FFFFFF&format=svg`}
                             className="w-60 h-60
                             rounded-lg
                             "
