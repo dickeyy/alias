@@ -179,7 +179,7 @@ export default function PlayingScreen(props:any) {
             
             {isOwner ? (
                 <>
-                    <button className='btn  btn-error btn-block mt-5  btn-lg' onClick={() => {
+                    <button className='btn  btn-error mt-10  btn-lg' onClick={() => {
                         backToLobby(game)
                     }}>Back to Lobby</button>
                 </>

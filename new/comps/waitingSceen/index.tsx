@@ -124,7 +124,7 @@ export default function WaitingScreen(props:any) {
                 
             <div className='sm:col-span-3 col-span-6  flex flex-col items-center justify-center bg-base-200 rounded-xl p-4 gap-2'>
                 <p className='text-xl opacity-60'>Game code:</p>
-                <h1 className='sm:text-8xl text-6xl font-black text-primary cursor-pointer transition-all ease-in-out duration-200 hover:text-primary/60'
+                <h1 className='lg:text-8xl md:text-7xl sm:text-6xl font-black text-primary cursor-pointer transition-all ease-in-out duration-200 hover:text-primary/60'
                     onClick={(e:any) => {
                         if (e.target.innerText === '*'.repeat(id.length)) {
                             // if the text is dots, set it to the id
