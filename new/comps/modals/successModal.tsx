@@ -6,7 +6,7 @@ export default function SuccessModal(props:any) {
                 <h3 className="font-bold text-2xl">Alias Added!</h3>
                 <p className="text-sm text-zinc-400 mt-2">{props.message}</p>
 
-                <button className="btn btn-primary w-full mt-10">Close</button>
+                <button className="btn btn-primary w-full mt-10">Okay</button>
 
             </form>
             <form method="dialog" className="modal-backdrop">
