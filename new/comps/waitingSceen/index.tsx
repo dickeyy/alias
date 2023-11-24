@@ -124,7 +124,7 @@ export default function WaitingScreen(props:any) {
                 
             <div className='sm:col-span-3 col-span-6  flex flex-col items-center justify-center bg-base-200 rounded-xl p-4 gap-2'>
                 <p className='text-xl opacity-60'>Game code:</p>
-                <h1 className='sm:text-6xl text-8xl font-black text-primary cursor-pointer transition-all ease-in-out duration-200 hover:text-primary/60'
+                <h1 className='sm:text-8xl text-6xl font-black text-primary cursor-pointer transition-all ease-in-out duration-200 hover:text-primary/60'
                     onClick={(e:any) => {
                         if (e.target.innerText === '*'.repeat(id.length)) {
                             // if the text is dots, set it to the id
@@ -160,7 +160,19 @@ export default function WaitingScreen(props:any) {
                 </div>
             </div>
 
-            <div className='col-span-2 flex flex-col items-center justify-center bg-base-200 rounded-xl p-4'>
+            <div className='col-span-2 flex flex-col items-center justify-center bg-base-200 rounded-xl p-4 cursor-pointer transition-all ease-in-out duration-200'
+                id="player_count_container"
+                onClick={(e) => {
+                    // blur the box on click
+                    if (document.getElementById('player_count_container')?.classList.contains('blur-md')) {
+                        // if the qr code is blurred, remove the blur
+                        document.getElementById('player_count_container')?.classList.remove('filter', 'blur-md')
+                    } else {
+                        // if the qr code is not blurred, add the blur
+                        document.getElementById('player_count_container')?.classList.add('filter', 'blur-md')
+                    }
+                }}
+            >
                 <p>Players: <span className='text-primary font-bold'>{game?.players?.length}</span></p>
             </div>
             <div className='col-span-2 flex flex-col items-center justify-center bg-base-200 rounded-xl p-4'>
