@@ -80,7 +80,6 @@ export default function PlayingScreen(props:any) {
     useEffect(() => {
 
         // if the outaliases array is 1 less than the game.aliases array, then we have a winner
-        console.log(outAliases.length, game.aliases.length - 1)
         if (outAliases.length === game.aliases.length - 1) {
             // find the game.aliases.id that is not in the outAliases array of ids
             const winner = game.aliases.find((alias:any) => !outAliases.includes(JSON.parse(alias).id))

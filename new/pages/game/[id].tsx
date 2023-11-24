@@ -37,7 +37,6 @@ export default function Page() {
 
     supabase.channel(`game:${id}`).on("postgres_changes", { event: "*", schema: '*' }, payload => {
         setGame(payload.new)
-        console.log(payload.new)
     }).subscribe()
 
     useEffect(() => {
