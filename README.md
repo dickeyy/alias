@@ -1,6 +1,8 @@
 # Alias
 The fun-to-play family game is now modernized.
 
+[![Made with Supabase](https://supabase.com/badge-made-with-supabase-dark.svg)](https://supabase.com)
+
 ## What is it?
 This is a website version of a game my family plays. We used to have to play on paper, however, we usually only play it on vacation. As you can imagine, finding large pieces of paper in hotels or air bnbs is hard. So I decided to modernize it. 
 
