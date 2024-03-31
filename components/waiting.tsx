@@ -1,13 +1,38 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import Image from "next/image";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
+import { toast } from "sonner";
+import useUserStore from "@/stores/user-store";
+import AliasAddedModal from "./alias-added-modal";
+import { ThemeSwitcher } from "./theme-switcher";
 
-export default function Waiting({ id }: { id: string }) {
+export default function Waiting({
+    id,
+    game,
+    isOwner
+}: {
+    id: string;
+    game: any;
+    isOwner: boolean;
+}) {
+    const { user } = useUserStore();
+    const [enteredAlias, setEnteredAlias] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    useEffect(() => {
+        if (game?.code !== undefined) {
+            if (user?.id !== undefined) {
+                joinGame(game.code, user);
+            }
+        }
+    });
+
     return (
-        <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-6 md:w-2/3">
+        <div className="mt-4 grid grid-cols-1 gap-2 sm:w-full sm:grid-cols-6 md:w-3/4 lg:w-2/3">
             <div className="flex w-full flex-row items-center justify-center gap-2 rounded-md border bg-secondary p-3 dark:bg-secondary/20 sm:col-span-6">
                 <h1 className="text-4xl font-bold">Waiting to start</h1>
             </div>
@@ -96,37 +121,180 @@ export default function Waiting({ id }: { id: string }) {
                 }}
             >
                 <p className="text-lg font-normal text-muted-foreground ">
-                    <span className="font-semibold text-primary/80">8</span> Players
+                    <span className="font-semibold text-primary/80">{game?.players?.length}</span>{" "}
+                    Player{game?.players?.length === 1 ? "" : "s"}
                 </p>
             </div>
 
             <div className="flex w-full flex-row items-center justify-center gap-2 rounded-md border bg-secondary p-3 dark:bg-secondary/20 sm:col-span-2">
                 <p className="text-lg font-normal text-muted-foreground ">
-                    <span className="font-semibold text-primary/80">8</span> Aliases
+                    <span className="font-semibold text-primary/80">{game?.aliases?.length}</span>{" "}
+                    Alia{game?.aliases?.length === 1 ? "s" : "es"}
                 </p>
             </div>
 
             <div className="flex w-full flex-row items-center justify-center gap-2 rounded-md border bg-secondary p-3 dark:bg-secondary/20 sm:col-span-2">
                 <p className="text-lg font-normal text-muted-foreground ">
-                    Round <span className="font-semibold text-primary/80">3</span>
+                    Round <span className="font-semibold text-primary/80">{game?.round}</span>
                 </p>
             </div>
 
             <div className="flex w-full flex-row items-center justify-center gap-2 rounded-md border bg-secondary p-3 dark:bg-secondary/20 sm:col-span-6">
-                <Input placeholder="Enter your alias" className="h-14 bg-background text-lg" />
-                <Button className="h-14 px-8">Enter</Button>
+                <form
+                    className="flex w-full flex-row items-center justify-center gap-2"
+                    onSubmit={async (e) => {
+                        e.preventDefault();
+                        const success = await enterAlias(game, enteredAlias);
+                        if (success) {
+                            setEnteredAlias("");
+                            toast.success("Alias added successfully");
+                            setIsModalOpen(true);
+                        }
+                    }}
+                >
+                    <Input
+                        placeholder="Enter your alias"
+                        className="h-14 bg-background text-lg"
+                        value={enteredAlias}
+                        onChange={(e) => {
+                            setEnteredAlias(e.target.value);
+                        }}
+                    />
+                    <Button className="h-14 px-8">Enter</Button>
+                </form>
             </div>
 
-            <div className="flex w-full flex-row items-center justify-center gap-2 rounded-md border bg-secondary p-3 dark:bg-secondary/20 sm:col-span-3">
-                <Button className="h-12 w-full" variant={"destructive"}>
-                    Close Lobby
-                </Button>
-            </div>
-            <div className="flex w-full flex-row items-center justify-center gap-2 rounded-md border bg-secondary p-3 dark:bg-secondary/20 sm:col-span-3">
-                <Button className="h-12 w-full bg-green-600 hover:bg-green-700" variant={"default"}>
-                    Start Game
-                </Button>
-            </div>
+            {isOwner && (
+                <>
+                    <div className="flex w-full flex-row items-center justify-center gap-2 rounded-md border bg-secondary p-3 dark:bg-secondary/20 sm:col-span-3">
+                        <Button
+                            className="h-12 w-full"
+                            variant={"destructive"}
+                            onClick={async () => {
+                                await endGame(game);
+                                toast.info("Game ended");
+                            }}
+                        >
+                            Close Lobby
+                        </Button>
+                    </div>
+                    <div className="flex w-full flex-row items-center justify-center gap-2 rounded-md border bg-secondary p-3 dark:bg-secondary/20 sm:col-span-3">
+                        <Button
+                            className="h-12 w-full bg-green-600 hover:bg-green-700"
+                            variant={"default"}
+                            onClick={async () => {
+                                await startGame(game);
+                                toast.info("Game started");
+                            }}
+                        >
+                            Start Game
+                        </Button>
+                    </div>
+                </>
+            )}
+
+            {/* modal to let player know very clearly that their alias was added */}
+            <AliasAddedModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
         </div>
     );
+}
+
+async function enterAlias(game: any, alias: string) {
+    if (alias.length > 0) {
+        // generate a random long alphanumeric string\
+        const id =
+            Math.random().toString(36).substring(2, 15) +
+            Math.random().toString(36).substring(2, 15);
+
+        const { error } = await supabase
+            .from("games")
+            .update({
+                aliases: [
+                    ...game.aliases,
+                    {
+                        id: id,
+                        alias: alias
+                    }
+                ]
+            })
+            .eq("code", game.code);
+
+        if (error) {
+            toast.error(error.message);
+            return false;
+        } else {
+            return true;
+        }
+    }
+}
+
+async function joinGame(gameCode: string, user?: any) {
+    // this will run on page load for every user
+    // first check if there is a user
+    if (user?.id !== undefined) {
+        if (user?.id !== null) {
+            if (user !== undefined && user !== null) {
+                // first fetch the game
+                const { data, error } = await supabase
+                    .from("games")
+                    .select("*")
+                    .eq("code", gameCode)
+                    .single();
+
+                if (error) {
+                    toast.error(error.message);
+                }
+
+                // if there is a game
+                if (data) {
+                    // check if the user is not already in the game
+                    if (!data.players.includes(user.id)) {
+                        // if they aren't, add them to the game
+                        const { error } = await supabase
+                            .from("games")
+                            .update({
+                                players: [...data.players, user.id]
+                            })
+                            .eq("code", gameCode);
+
+                        if (error) {
+                            toast.error(error.message);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+async function startGame(game: any) {
+    const { error } = await supabase
+        .from("games")
+        .update({
+            started: true
+        })
+        .eq("code", game.code);
+
+    if (error) {
+        toast.error(error.message);
+        return false;
+    } else {
+        return true;
+    }
+}
+
+async function endGame(game: any) {
+    const { error } = await supabase
+        .from("games")
+        .update({
+            active: false
+        })
+        .eq("code", game.code);
+
+    if (error) {
+        toast.error(error.message);
+        return false;
+    } else {
+        return true;
+    }
 }
