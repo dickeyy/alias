@@ -8,7 +8,7 @@ import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
 import useUserStore from "@/stores/user-store";
 import AliasAddedModal from "./alias-added-modal";
-import { ThemeSwitcher } from "./theme-switcher";
+import { nanoid } from "nanoid";
 
 export default function Waiting({
     id,
@@ -74,7 +74,7 @@ export default function Waiting({
                     className="flex items-center justify-center gap-2 transition-all duration-200 ease-in-out"
                 >
                     <p
-                        className="cursor-pointer text-5xl font-bold transition-all duration-200 ease-in-out hover:opacity-60"
+                        className="cursor-pointer text-6xl font-bold transition-all duration-200 ease-in-out hover:opacity-60"
                         onClick={() => {
                             if (
                                 document
@@ -129,7 +129,7 @@ export default function Waiting({
             <div className="flex w-full flex-row items-center justify-center gap-2 rounded-md border bg-secondary p-3 dark:bg-secondary/20 sm:col-span-2">
                 <p className="text-lg font-normal text-muted-foreground ">
                     <span className="font-semibold text-primary/80">{game?.aliases?.length}</span>{" "}
-                    Alia{game?.aliases?.length === 1 ? "s" : "es"}
+                    Alia{game?.aliases?.length === 1 ? "s" : "ses"}
                 </p>
             </div>
 
@@ -144,11 +144,18 @@ export default function Waiting({
                     className="flex w-full flex-row items-center justify-center gap-2"
                     onSubmit={async (e) => {
                         e.preventDefault();
-                        const success = await enterAlias(game, enteredAlias);
+                        if (enteredAlias.trim() === "") {
+                            toast.error("Alias cannot be empty");
+                            return;
+                        }
+
+                        const success = await enterAlias(game, enteredAlias.trim());
                         if (success) {
                             setEnteredAlias("");
                             toast.success("Alias added successfully");
                             setIsModalOpen(true);
+                        } else {
+                            toast.error("Something went wrong. Please try again.");
                         }
                     }}
                 >
@@ -202,10 +209,7 @@ export default function Waiting({
 async function enterAlias(game: any, alias: string) {
     if (alias.length > 0) {
         // generate a random long alphanumeric string\
-        const id =
-            Math.random().toString(36).substring(2, 15) +
-            Math.random().toString(36).substring(2, 15);
-
+        const id = nanoid(6);
         const { error } = await supabase
             .from("games")
             .update({
