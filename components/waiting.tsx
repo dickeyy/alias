@@ -221,7 +221,7 @@ async function enterAlias(game: any, alias: string) {
                     }
                 ]
             })
-            .eq("code", game.code);
+            .eq("id", game.id);
 
         if (error) {
             toast.error(error.message);
@@ -277,7 +277,7 @@ async function startGame(game: any) {
         .update({
             started: true
         })
-        .eq("code", game.code);
+        .eq("id", game.id);
 
     if (error) {
         toast.error(error.message);
@@ -291,9 +291,10 @@ async function endGame(game: any) {
     const { error } = await supabase
         .from("games")
         .update({
-            active: false
+            active: false,
+            code: -1
         })
-        .eq("code", game.code);
+        .eq("id", game.id);
 
     if (error) {
         toast.error(error.message);
