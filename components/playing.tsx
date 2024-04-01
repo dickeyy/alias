@@ -25,7 +25,8 @@ export default function Playing({
     // set aliases and outAliases
     useEffect(() => {
         if (game?.aliases) {
-            setAliases(game.aliases);
+            // randomize the aliases so that the order is different every time
+            setAliases(game.aliases.sort(() => Math.random() - 0.5) || []);
         }
         if (game?.out_aliases) {
             setOutAliases(game.out_aliases);
