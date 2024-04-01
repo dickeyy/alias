@@ -10,7 +10,12 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 async function getGame(id: string) {
-    const { data, error } = await supabase.from("games").select("*").eq("code", id).single();
+    const { data, error } = await supabase
+        .from("games")
+        .select("*")
+        .eq("code", id)
+        .eq("active", true)
+        .single();
 
     if (error) {
         toast.error(error.message);

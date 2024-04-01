@@ -67,7 +67,8 @@ export default function Playing({
                 .update({
                     out_aliases: outAliases?.filter((item: any) => item !== alias.id)
                 })
-                .eq("code", game.code);
+                // where the game code matches the current game AND active is true
+                .eq("id", game.id);
 
             if (error) {
                 toast.error(error.message);
@@ -83,7 +84,7 @@ export default function Playing({
                 .update({
                     out_aliases: [...outAliases, alias.id]
                 })
-                .eq("code", game.code);
+                .eq("id", game.id);
 
             if (error) {
                 toast.error(error.message);
@@ -161,7 +162,7 @@ async function backToLobby(game: any) {
             round: game.round + 1,
             out_aliases: []
         })
-        .eq("code", game.code);
+        .eq("id", game.id);
 
     if (error) {
         toast.error(error.message);
