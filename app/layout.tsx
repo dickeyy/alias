@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Rubik as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { ThemeProvider } from "@/components/theme-provider";
-import { Toaster } from "@/components/ui/sonner";
+import { Providers } from "@/components/providers";
 
 const fontSans = FontSans({
     subsets: ["latin"],
@@ -34,15 +33,7 @@ export default function RootLayout({
                     fontSans.variable
                 )}
             >
-                <ThemeProvider
-                    attribute="class"
-                    defaultTheme="dark"
-                    enableSystem
-                    disableTransitionOnChange
-                >
-                    {children}
-                    <Toaster richColors position="top-right" />
-                </ThemeProvider>
+                <Providers>{children}</Providers>
             </body>
         </html>
     );
