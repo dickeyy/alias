@@ -14,12 +14,12 @@ import { ScrollArea } from "./ui/scroll-area";
 export default function HowToModal({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: any }) {
     return (
         <Dialog onOpenChange={setIsOpen} open={isOpen}>
-            <DialogContent className="max-w-[60%]">
+            <DialogContent className="max-w-[100%] md:max-w-[60%]">
                 <DialogHeader>
                     <DialogTitle className="text-2xl">How to play Alias</DialogTitle>
-                    <Separator className="mt-1" />
+                    <Separator className="my-2" />
                 </DialogHeader>
-                <ScrollArea className="flex h-[70vh]">
+                <ScrollArea className="flex h-[70vh] pr-2">
                     <div className="flex flex-col gap-1">
                         <h3 className="text-xl font-semibold">What is it?</h3>
                         <p className="text-muted-foreground">
@@ -28,12 +28,12 @@ export default function HowToModal({ isOpen, setIsOpen }: { isOpen: boolean; set
                             imagine, finding large pieces of paper in hotels or rental houses can be
                             hard. So I decided to make an easier way to play.
                         </p>
-                        <Separator />
+                        <Separator className="my-4" />
                         <h3 className="text-xl font-semibold">How to play</h3>
                         <p className="text-muted-foreground">
                             The game itself is simple, here are the steps for the website version:
                         </p>
-                        <ol className="flex list-inside list-decimal flex-col space-y-2 pl-2 text-muted-foreground">
+                        <ol className="mb-4 flex list-inside list-decimal flex-col space-y-4 pl-2 text-muted-foreground">
                             <li>
                                 Have a group of at least 4 people. The more you have the better!
                             </li>

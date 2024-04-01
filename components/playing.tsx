@@ -96,12 +96,12 @@ export default function Playing({
 
     return (
         <div className="flex w-full flex-col items-center justify-center gap-4">
-            <div className="fixed top-2 flex w-full flex-row items-center justify-between px-4 text-muted-foreground">
+            <div className="fixed top-0 z-10 flex w-full flex-row items-center justify-between bg-background px-4 py-1 text-muted-foreground">
                 <p className="w-20 text-lg font-medium">{`${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`}</p>
                 {isOwner && (
                     <p className="text-lg font-semibold ">Click on an Alias to remove it</p>
                 )}
-                <VolumeXIcon className="h-6 w-6 cursor-pointer" />
+                <VolumeXIcon className="invisible h-6 w-6 cursor-pointer" />
             </div>
             <div className="flex w-full flex-wrap items-center justify-center gap-4 pt-8">
                 {aliases.map((alias) => {
@@ -111,8 +111,8 @@ export default function Playing({
                     return (
                         <div
                             key={parsed.id}
-                            className={`flex w-full cursor-pointer justify-center rounded-md border bg-secondary/40 p-3 text-6xl font-bold shadow-sm transition-all duration-200 ease-in-out md:w-fit 
-                            ${isOut ? "text-red-500  opacity-10 hover:opacity-15" : "opacity-100 hover:opacity-65"}
+                            className={`flex w-full cursor-pointer justify-center rounded-md border bg-secondary/40 p-3 text-6xl font-bold shadow-sm transition-all duration-200 ease-in-out md:w-fit
+                            ${isOut ? "text-red-500  line-through opacity-20 hover:opacity-15 " : "opacity-100 hover:opacity-65"}
                             ${isWinner ? "text-green-600" : ""}
                         `}
                             onClick={() => {

@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 export default function Home() {
     return (
         <main className="flex min-h-screen flex-col items-center justify-center p-4 sm:p-24">
-            <div className="fixed top-0 flex w-full flex-row items-center justify-end gap-2 px-4 py-2">
+            <div className="fixed top-0 flex w-full flex-row items-center justify-end gap-2 bg-background px-4 py-2">
                 <ThemeSwitcher />
             </div>
             <div className="grid w-full grid-cols-2 gap-2 md:w-[75%] lg:w-[55%]">

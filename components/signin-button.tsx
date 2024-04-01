@@ -12,7 +12,10 @@ export default function SignInButton() {
     const signIn = async () => {
         supabase.auth
             .signInWithOAuth({
-                provider: "google"
+                provider: "google",
+                options: {
+                    redirectTo: window?.location?.origin || "https://alias.dickey.gg"
+                }
             })
             .then((response) => {
                 if (response.error) {
@@ -44,7 +47,7 @@ export default function SignInButton() {
     return (
         <div className="col-span-2 flex w-full flex-col items-center justify-center gap-2 rounded-md border bg-secondary p-3 dark:bg-secondary/20">
             {user.id && (
-                <p className="text-lg font-semibold text-muted-foreground">👋 {user.email}</p>
+                <p className="text-md font-normal text-muted-foreground">👋 {user.email}</p>
             )}
             {!user.id ? (
                 <Button className="h-12 w-full gap-2" variant={"outline"} onClick={signIn}>
