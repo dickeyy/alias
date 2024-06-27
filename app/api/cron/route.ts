@@ -30,6 +30,7 @@ export async function GET(request: Request) {
                 }
             }
 
+            console.log("kept supabase alive");
             return new Response("done");
         }
     } catch (error) {

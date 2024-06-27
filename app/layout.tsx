@@ -11,11 +11,11 @@ const fontSans = FontSans({
 
 export const metadata: Metadata = {
     title: "Play Alias",
-    description: "Play Alias online with friends",
+    description: "Play Alias online with friends!",
     icons: [
         {
             rel: "icon",
-            url: "https://dickey.gg/favicon.ico"
+            url: "https://kyle.so/favicon.ico"
         }
     ]
 };
