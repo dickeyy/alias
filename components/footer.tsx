@@ -1,4 +1,4 @@
-import { DiscordLogoIcon, GitHubLogoIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
 export default function Footer() {
     return (
@@ -6,15 +6,15 @@ export default function Footer() {
             <p className="text-xs">
                 © {new Date().getFullYear()}{" "}
                 <a
-                    href="https://dickey.gg"
+                    href="https://kyle.so"
                     target="_blank"
-                    className="underline transition-all duration-150 ease-in-out hover:text-foreground"
+                    className="transition-all duration-150 ease-in-out hover:text-foreground hover:underline"
                 >
                     Kyle Dickey
                 </a>
             </p>
             <div className="flex gap-2">
-                <a href="https://github.com/dickeyy" target="_blank" className="text-lg">
+                <a href="https://github.com/dickeyy/alias" target="_blank" className="text-lg">
                     <GitHubLogoIcon />
                 </a>
             </div>

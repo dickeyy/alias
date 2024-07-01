@@ -44,7 +44,7 @@ export default function Waiting({
                 >
                     <img
                         alt="QR Code to join the game"
-                        src={`https://api.qrserver.com/v1/create-qr-code/?size=200x2000&data=https://alias.dickey.gg/game/${id}&bgcolor=130f0e&color=FFFFFF&format=png`}
+                        src={`https://api.qrserver.com/v1/create-qr-code/?size=200x2000&data=https://alias.kyle.so/game/${id}&bgcolor=130f0e&color=FFFFFF&format=png`}
                         className="aspect-square h-auto w-full cursor-pointer rounded-md transition-all duration-200 ease-in-out hover:opacity-60"
                         id="qr_code"
                         onClick={() => {
@@ -97,7 +97,7 @@ export default function Waiting({
                     </p>
                 </div>
                 <p className="text-md text-muted-foreground">
-                    Go to <span className="font-semibold text-primary/80">alias.dickey.gg</span> to
+                    Go to <span className="font-semibold text-primary/80">alias.kyle.so</span> to
                     join
                 </p>
             </div>
@@ -166,6 +166,7 @@ export default function Waiting({
                         onChange={(e) => {
                             setEnteredAlias(e.target.value);
                         }}
+                        autoFocus
                     />
                     <Button className="h-14 px-8">Enter</Button>
                 </form>
