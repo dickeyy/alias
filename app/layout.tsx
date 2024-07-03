@@ -27,6 +27,13 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
+            <head>
+                <script
+                    defer
+                    data-domain="alias.kyle.so"
+                    src="https://analytics.kyle.so/js/script.js"
+                ></script>
+            </head>
             <body
                 className={cn(
                     "min-h-screen bg-background font-sans antialiased",
