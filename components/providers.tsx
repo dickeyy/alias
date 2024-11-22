@@ -1,6 +1,5 @@
 // app/providers.js
 "use client";
-import posthog from "posthog-js";
 import { ThemeProvider } from "./theme-provider";
 import { Toaster } from "./ui/sonner";
 
