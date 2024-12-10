@@ -1,24 +1,15 @@
 import { supabase } from "@/lib/supabase";
 
-export const dynamic = "force-dynamic";
-
-// You'll want to store this in your .env.local file
-const API_KEY = process.env.CRON_API_KEY;
+export const dynamic = "force-dynamic"; // static by default, unless reading the request
 
 export async function GET(request: Request) {
     try {
-        // Check for authorization header
-        const authHeader = request.headers.get("authorization");
-
-        if (!authHeader || authHeader !== `Bearer ${API_KEY}`) {
-            return new Response("Unauthorized", { status: 401 });
-        }
-
+        // set any supabase.game objects with a created_at > 3 days earlier to inactive
         const { data, error } = await supabase
             .from("games")
             .select("*")
             .eq("active", true)
-            .lt("created_at", (new Date().getTime() / 1000 - 86400 * 3).toFixed(0)); // 3 days
+            .lt("created_at", (new Date().getTime() / 1000 - 86400 * 3).toFixed(0));
 
         if (error) {
             return new Response(error.message);
