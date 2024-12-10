@@ -1,18 +1,24 @@
 import { supabase } from "@/lib/supabase";
 
-export const dynamic = "force-dynamic"; // static by default, unless reading the request
+export const dynamic = "force-dynamic";
+
+// You'll want to store this in your .env.local file
+const API_KEY = process.env.CRON_API_KEY;
 
 export async function GET(request: Request) {
     try {
-        // set any supabase.game objects with a created_at > 3 days earlier to inactive
+        // Check for authorization header
+        const authHeader = request.headers.get("authorization");
+
+        if (!authHeader || authHeader !== `Bearer ${API_KEY}`) {
+            return new Response("Unauthorized", { status: 401 });
+        }
+
         const { data, error } = await supabase
             .from("games")
             .select("*")
             .eq("active", true)
-            // .lt("created_at", (new Date().getTime() / 1000 - 1).toFixed(0)); // for testing
-            .lt("created_at", (new Date().getTime() / 1000 - 86400 * 3).toFixed(0));
-        // 86400 seconds = 24 hours * 3 = 3 days, so any game older than 3 days will be set to inactive if it is still active and has not been updated
-        // just hopefully no one is playing a game for 3 days straight
+            .lt("created_at", (new Date().getTime() / 1000 - 86400 * 3).toFixed(0)); // 3 days
 
         if (error) {
             return new Response(error.message);
