@@ -31,7 +31,7 @@ export default function RootLayout({
                 <script
                     defer
                     data-domain="alias.kyle.so"
-                    src="https://analytics.kyle.so/js/script.js"
+                    src="https://a.kyle.so/js/script.js"
                 ></script>
             </head>
             <body
