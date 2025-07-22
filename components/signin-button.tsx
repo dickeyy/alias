@@ -14,7 +14,7 @@ export default function SignInButton() {
             .signInWithOAuth({
                 provider: "google",
                 options: {
-                    redirectTo: window?.location?.origin || "https://alias.dickey.gg"
+                    redirectTo: window?.location?.origin || "https://alias.kyle.so"
                 }
             })
             .then((response) => {
