@@ -7,7 +7,14 @@
     },
     "files": {
         "ignoreUnknown": false,
-        "includes": ["**/app/**/*", "**/.vscode/**/*", "!**/app/globals.css"]
+        "includes": [
+            "**/*.ts",
+            "**/*.tsx",
+            "!**/node_modules/**/*",
+            "!**/.next/**/*",
+            "!**/app/globals.css",
+            "!**/convex/_generated/**/*"
+        ]
     },
     "formatter": {
         "enabled": true,
