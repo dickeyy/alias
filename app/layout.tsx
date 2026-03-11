@@ -19,9 +19,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "Alias - The Word-Guessing Party Game",
-    description:
-        "Play Alias online with friends. Form teams, describe words, and score points in this classic party game.",
+    title: "Alias - A party game about fake names and wrong guesses",
+    description: "Play Alias online with friends. No phone? No problem.",
+    icons: {
+        icon: "https://kyle.so/favicon.ico",
+    },
 };
 
 export default async function RootLayout({
