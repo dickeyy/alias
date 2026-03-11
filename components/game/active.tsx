@@ -30,7 +30,9 @@ export default function Active({ id }: { id: string }) {
             <div className="flex min-h-svh flex-col">
                 <header className="flex items-center justify-between gap-3 px-4 py-4 sm:px-8 sm:py-5">
                     <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
-                        <span className="text-sm font-semibold text-primary sm:text-base">Alias</span>
+                        <span className="text-sm font-semibold text-primary sm:text-base">
+                            Alias
+                        </span>
                         <span className="font-mono text-sm tracking-widest text-muted-foreground sm:text-base">
                             · {id}
                         </span>
