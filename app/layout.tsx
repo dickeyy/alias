@@ -5,6 +5,7 @@ import { ConvexClientProvider } from "@/components/convex-client-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { getToken } from "@/lib/auth-server";
 import { cn } from "@/lib/utils";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -34,6 +35,12 @@ export default async function RootLayout({
     const token = await getToken();
     return (
         <html lang="en" className={cn("font-sans", inter.variable)}>
+            <head>
+                <Script
+                    src="https://cdn.visitors.now/v.js"
+                    data-token={process.env.NEXT_PUBLIC_VISITORS_TOKEN}
+                />
+            </head>
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
