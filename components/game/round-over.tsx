@@ -180,22 +180,16 @@ export default function RoundOver({ id }: { id: string }) {
                                     asChild
                                     size="lg"
                                     onClick={() =>
-                                        isHost
-                                            ? updateGameState({
-                                                  code: id,
-                                                  state: "inactive",
-                                              })
-                                            : undefined
+                                        updateGameState({
+                                            code: id,
+                                            state: "inactive",
+                                        })
                                     }
                                 >
                                     <Link href="/">Home</Link>
                                 </Button>
                                 <Button
-                                    onClick={() =>
-                                        isHost
-                                            ? newRound({ code: id })
-                                            : undefined
-                                    }
+                                    onClick={() => newRound({ code: id })}
                                     size="lg"
                                 >
                                     Play again
