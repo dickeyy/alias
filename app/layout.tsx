@@ -1,46 +1,53 @@
 import type { Metadata } from "next";
-import { Rubik as FontSans } from "next/font/google";
+import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
+import { ConvexClientProvider } from "@/components/convex-client-provider";
+import { Toaster } from "@/components/ui/sonner";
+import { getToken } from "@/lib/auth-server";
 import { cn } from "@/lib/utils";
-import { Providers } from "@/components/providers";
+import Script from "next/script";
 
-const fontSans = FontSans({
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+
+const geistSans = Geist({
+    variable: "--font-geist-sans",
     subsets: ["latin"],
-    variable: "--font-sans"
+});
+
+const geistMono = Geist_Mono({
+    variable: "--font-geist-mono",
+    subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-    title: "Play Alias",
-    description: "Play Alias online with friends!",
-    icons: [
-        {
-            rel: "icon",
-            url: "https://kyle.so/favicon.ico"
-        }
-    ]
+    title: "Alias - A party game about fake names and wrong guesses",
+    description: "Play Alias online with friends. No phone? No problem.",
+    icons: {
+        icon: "https://kyle.so/favicon.ico",
+    },
 };
 
-export default function RootLayout({
-    children
+export default async function RootLayout({
+    children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const token = await getToken();
     return (
-        <html lang="en">
+        <html lang="en" className={cn("font-sans", inter.variable)}>
             <head>
-                <script
-                    defer
-                    data-domain="alias.kyle.so"
-                    src="https://a.kyle.so/js/script.js"
-                ></script>
+                <Script
+                    src="https://cdn.visitors.now/v.js"
+                    data-token={process.env.NEXT_PUBLIC_VISITORS_TOKEN}
+                />
             </head>
             <body
-                className={cn(
-                    "min-h-screen bg-background font-sans antialiased",
-                    fontSans.variable
-                )}
+                className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
-                <Providers>{children}</Providers>
+                <ConvexClientProvider initialToken={token}>
+                    {children}
+                    <Toaster richColors />
+                </ConvexClientProvider>
             </body>
         </html>
     );
