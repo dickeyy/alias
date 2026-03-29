@@ -51,7 +51,7 @@ export default function Active({ id }: { id: string }) {
                 )}
 
                 <main className="flex flex-1 flex-col items-center justify-center gap-4 px-8 pb-10">
-                    <div className="flex w-full max-w-3xl flex-wrap items-center justify-center gap-4">
+                    <div className="flex w-full max-w-screen flex-wrap items-center justify-center gap-4">
                         {game.aliases.map((alias, i) => (
                             <AliasCard
                                 key={alias.id}
